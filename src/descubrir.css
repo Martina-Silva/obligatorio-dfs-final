@@ -1,0 +1,68 @@
+.nota {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+
+.buscador {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.buscador .receta-acciones {
+    grid-column: 1 / -1;
+    margin-top: 0;
+}
+
+.badge-idioma {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    margin-left: 8px;
+}
+
+.externa-detalle {
+    margin-top: 10px;
+}
+
+.externa-detalle summary {
+    cursor: pointer;
+    color: #d35400;
+    font-weight: 600;
+}
+
+.externa-video {
+    margin-top: 10px;
+}
+
+.externa-video a {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.guardar-externa {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed #ddd;
+}
+
+.guardada-ok {
+    margin-top: 14px;
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.guardada-ok a {
+    color: #d35400;
+}
+
+@media (max-width: 700px) {
+    .buscador {
+        grid-template-columns: 1fr;
+    }
+}

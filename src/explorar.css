@@ -1,0 +1,57 @@
+.total-resultados {
+    color: #666;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+}
+
+.btn-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-link:hover {
+    background: #1d4ed8;
+}
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.volver {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #d35400;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.volver:hover {
+    text-decoration: underline;
+}
+
+.detalle-img {
+    width: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.detalle-lista {
+    margin: 6px 0 14px 22px;
+}
+
+.detalle-texto {
+    white-space: pre-line;
+    margin-top: 6px;
+}
