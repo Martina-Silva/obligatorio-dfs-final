@@ -10,7 +10,6 @@ const initialState = {
     lista: [],
     categorias: [],
     filtros: { ...filtrosIniciales },
-    // Pantalla "Explorar": filtros y página actual
     explorar: {
         filtros: { ...filtrosIniciales },
         pagina: 1,

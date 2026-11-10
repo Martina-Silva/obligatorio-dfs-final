@@ -26,7 +26,6 @@ const Explorar = () => {
 
     const hayFiltros = filtros.titulo !== "" || filtros.categoria !== "" || filtros.tiempoMax !== ""
 
-    // Si entraron directo a esta pantalla, cargamos las categorías para el filtro
     useEffect(() => {
         if (categorias.length > 0) return
 
@@ -41,7 +40,6 @@ const Explorar = () => {
         cargarCategorias()
     }, [dispatch, categorias.length])
 
-    // Cada vez que cambian los filtros o la página, volvemos a pedir las recetas
     useEffect(() => {
         let cancelado = false
 

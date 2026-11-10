@@ -21,6 +21,9 @@ ChartJS.register(
     Legend
 )
 
+ChartJS.defaults.font.family = "'Lora', Georgia, serif"
+ChartJS.defaults.color = "#4a3426"
+
 const opciones = {
     responsive: true,
     plugins: {
@@ -28,6 +31,7 @@ const opciones = {
         title: {
             display: true,
             text: "Recetas por categoría",
+            font: { size: 16 },
         },
     },
     scales: {
@@ -40,7 +44,6 @@ const opciones = {
 
 const GraficaRecetas = () => {
 
-    // Cada vez que cambia la lista de recetas, se vuelven a pedir las estadísticas
     const lista = useSelector(state => state.recetas.lista)
     const [stats, setStats] = useState(null)
 
@@ -78,7 +81,10 @@ const GraficaRecetas = () => {
                         {
                             label: "Recetas",
                             data: stats.porCategoria.map(c => c.cantidad),
-                            backgroundColor: "rgba(211, 84, 0, 0.7)",
+                            backgroundColor: "rgba(184, 67, 47, 0.75)",
+                            borderColor: "#98351f",
+                            borderWidth: 1,
+                            borderRadius: 4,
                         },
                     ],
                 }}

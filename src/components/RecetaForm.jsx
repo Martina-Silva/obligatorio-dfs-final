@@ -26,7 +26,6 @@ const RecetaForm = () => {
     const [errorImagen, setErrorImagen] = useState("")
     const inputImagen = useRef(null)
 
-    // Plan PLUS: al llegar al límite no se pueden crear más recetas
     const limiteAlcanzado = user?.limiteRecetas != null && user.cantidadRecetas >= user.limiteRecetas
 
     const {
@@ -75,7 +74,6 @@ const RecetaForm = () => {
         try {
             const receta = {
                 titulo: data.titulo,
-                // Un ingrediente por línea
                 ingredientes: data.ingredientes.split("\n").map(i => i.trim()).filter(i => i !== ""),
                 instrucciones: data.instrucciones,
                 tiempoPreparacionMin: Number(data.tiempoPreparacionMin),
@@ -88,7 +86,6 @@ const RecetaForm = () => {
 
             await crearRecetaService(receta)
 
-            // Refrescamos la lista (respetando los filtros activos) y el uso del plan
             const [lista, perfil] = await Promise.all([
                 obtenerMisRecetasService(filtros),
                 obtenerPerfilService(),

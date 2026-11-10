@@ -32,7 +32,6 @@ const Descubrir = () => {
         defaultValues: { nombre: "", idioma: "es" },
     })
 
-    // Categorías (para guardar recetas) y datos del plan (para el límite)
     useEffect(() => {
         const cargarBase = async () => {
             try {

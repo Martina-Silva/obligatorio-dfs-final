@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { joiResolver } from "@hookform/resolvers/joi"
 import { toast } from "react-toastify"
 import { guardarExternaSchema } from "../validators/externas.validators"
-import { pedirTipIAService } from "../services/externas.service"
+import { pedirTipIAService, traducirRecetaExternaService } from "../services/externas.service"
 import { crearRecetaService } from "../services/recetas.service"
 import { obtenerPerfilService } from "../services/auth.service"
 import { actualizarUsuario } from "../features/user.slice"
@@ -17,6 +17,8 @@ const RecetaExterna = ({ receta }) => {
     const user = useSelector(state => state.user.user)
     const categorias = useSelector(state => state.recetas.categorias)
 
+    const [datos, setDatos] = useState(receta)
+    const [traduciendo, setTraduciendo] = useState(false)
     const [tip, setTip] = useState(null)
     const [cargandoTip, setCargandoTip] = useState(false)
     const [mostrarGuardar, setMostrarGuardar] = useState(false)
@@ -36,10 +38,27 @@ const RecetaExterna = ({ receta }) => {
         defaultValues: { tiempoPreparacionMin: "", categoria: "" },
     })
 
+    const traducir = async () => {
+        setTraduciendo(true)
+        try {
+            const traducida = await traducirRecetaExternaService(datos.idExterno)
+            if (traducida.idioma === "es") {
+                setDatos(traducida)
+                toast.success("Receta traducida al español")
+            } else {
+                toast.warning("No se pudo traducir ahora. Probá de nuevo en un rato.")
+            }
+        } catch (error) {
+            toast.error(obtenerMensajeError(error))
+        } finally {
+            setTraduciendo(false)
+        }
+    }
+
     const pedirTip = async () => {
         setCargandoTip(true)
         try {
-            const resultado = await pedirTipIAService(receta.nombre, receta.ingredientes)
+            const resultado = await pedirTipIAService(datos.nombre, datos.ingredientes)
             setTip(resultado)
         } catch (error) {
             toast.error(obtenerMensajeError(error))
@@ -53,19 +72,18 @@ const RecetaExterna = ({ receta }) => {
         setGuardando(true)
         try {
             const nueva = {
-                titulo: receta.nombre,
-                ingredientes: receta.ingredientes,
-                instrucciones: receta.instrucciones,
+                titulo: datos.nombre,
+                ingredientes: datos.ingredientes,
+                instrucciones: datos.instrucciones,
                 tiempoPreparacionMin: Number(data.tiempoPreparacionMin),
                 categoria: data.categoria,
             }
-            if (receta.imagen) {
-                nueva.imagenUrl = receta.imagen
+            if (datos.imagen) {
+                nueva.imagenUrl = datos.imagen
             }
 
             await crearRecetaService(nueva)
 
-            // Actualizamos el uso del plan
             const perfil = await obtenerPerfilService()
             dispatch(actualizarUsuario(perfil))
 
@@ -81,16 +99,16 @@ const RecetaExterna = ({ receta }) => {
 
     return (
         <article className="receta-card">
-            {receta.imagen && (
-                <img src={receta.imagen} alt={receta.nombre} className="receta-img" />
+            {datos.imagen && (
+                <img src={datos.imagen} alt={datos.nombre} className="receta-img" />
             )}
 
             <div className="receta-body">
-                <h3>{receta.nombre}</h3>
+                <h3>{datos.nombre}</h3>
                 <p className="receta-meta">
-                    {receta.categoria} · {receta.origen}
+                    {datos.categoria} · {datos.origen}
                     <span className="badge-idioma">
-                        {receta.idioma === "es" ? "Traducida con IA" : "Original (inglés)"}
+                        {datos.idioma === "es" ? "Traducida con IA" : "Original (inglés)"}
                     </span>
                 </p>
 
@@ -99,17 +117,17 @@ const RecetaExterna = ({ receta }) => {
 
                     <h4>Ingredientes</h4>
                     <ul className="detalle-lista">
-                        {receta.ingredientes.map((ingrediente, i) => (
+                        {datos.ingredientes.map((ingrediente, i) => (
                             <li key={i}>{ingrediente}</li>
                         ))}
                     </ul>
 
                     <h4>Instrucciones</h4>
-                    <p className="detalle-texto">{receta.instrucciones}</p>
+                    <p className="detalle-texto">{datos.instrucciones}</p>
 
-                    {receta.video && (
+                    {datos.video && (
                         <p className="externa-video">
-                            <a href={receta.video} target="_blank" rel="noreferrer">▶ Ver video</a>
+                            <a href={datos.video} target="_blank" rel="noreferrer">▶ Ver video</a>
                         </p>
                     )}
                 </details>
@@ -130,6 +148,11 @@ const RecetaExterna = ({ receta }) => {
                     </p>
                 ) : (
                     <div className="receta-acciones">
+                        {datos.idioma === "en" && (
+                            <button className="btn-secundario" onClick={traducir} disabled={traduciendo}>
+                                {traduciendo ? "Traduciendo..." : "🌐 Traducir"}
+                            </button>
+                        )}
                         <button className="btn-editar" onClick={pedirTip} disabled={cargandoTip}>
                             {cargandoTip ? "Pensando..." : "💡 Tip de IA"}
                         </button>

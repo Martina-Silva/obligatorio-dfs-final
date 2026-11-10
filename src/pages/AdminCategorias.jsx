@@ -51,7 +51,6 @@ const AdminCategorias = () => {
             }
         }
         cargar()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const cancelar = () => {
@@ -62,13 +61,11 @@ const AdminCategorias = () => {
 
     const iniciarEdicion = async (id) => {
         try {
-            // Pedimos la categoría al backend (GET /categories/:id) para editarla
             const categoria = await obtenerCategoriaPorIdService(id)
             reset({ nombre: categoria.nombre, descripcion: categoria.descripcion || "" })
             setEditandoId(id)
             setErrorServidor("")
 
-            // Subimos al formulario y dejamos el cursor en el nombre
             window.scrollTo({ top: 0, behavior: "smooth" })
             setFocus("nombre")
         } catch (error) {
@@ -105,7 +102,6 @@ const AdminCategorias = () => {
             if (editandoId === categoria._id) cancelar()
             toast.success("Categoría eliminada")
         } catch (error) {
-            // Si tiene recetas asociadas, el backend responde con un error y lo mostramos
             toast.error(obtenerMensajeError(error))
         }
     }

@@ -12,7 +12,6 @@ const CambiarPlan = () => {
     const user = useSelector(state => state.user.user)
     const [loading, setLoading] = useState(false)
 
-    // Solo se muestra a los usuarios del plan PLUS
     if (!user || user.plan !== "PLUS") return null
 
     const cambiar = async () => {

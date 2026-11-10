@@ -22,7 +22,6 @@ export const obtenerCategoriasService = async () => {
     return res.data;
 }
 
-// Sube la imagen a Cloudinary (vía el backend) y devuelve la URL
 export const subirImagenService = async (archivo) => {
     const formData = new FormData();
     formData.append("imagen", archivo);

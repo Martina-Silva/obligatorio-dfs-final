@@ -10,7 +10,6 @@ export const buscarSchema = Joi.object({
     idioma: Joi.string().valid("es", "en").required(),
 });
 
-// Datos que faltan para guardar una receta externa como propia
 export const guardarExternaSchema = Joi.object({
     tiempoPreparacionMin: Joi.number().integer().min(1).max(1440).required().messages({
         "number.base": "El tiempo debe ser un número",

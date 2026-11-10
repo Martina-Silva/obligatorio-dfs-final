@@ -1,6 +1,5 @@
 import { api } from "../config/api.config";
 
-// Recetas de todos los usuarios, paginadas y con filtros opcionales
 export const obtenerRecetasPublicasService = async ({ pagina, limite, filtros }) => {
     const params = { page: pagina, limit: limite };
 
@@ -18,7 +17,6 @@ export const obtenerRecetasPublicasService = async ({ pagina, limite, filtros })
     return res.data;
 }
 
-// Detalle de una receta
 export const obtenerRecetaPorIdService = async (id) => {
     const res = await api.get(`/recipes/${id}`);
     return res.data;

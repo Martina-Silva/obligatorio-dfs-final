@@ -5,7 +5,6 @@ import { obtenerMensajeError } from "../utils/errores"
 
 const RecetaDetalle = () => {
 
-    // El id viene de la URL: /explorar/:id
     const { id } = useParams()
 
     const [receta, setReceta] = useState(null)

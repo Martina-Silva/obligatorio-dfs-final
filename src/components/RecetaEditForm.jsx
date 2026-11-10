@@ -45,7 +45,6 @@ const RecetaEditForm = ({ receta, onTerminar }) => {
                 categoria: data.categoria,
             })
 
-            // Recargamos la lista respetando los filtros activos
             const lista = await obtenerMisRecetasService(filtros)
             dispatch(guardarRecetas(lista))
 

@@ -21,7 +21,6 @@ const RecetaItem = ({ receta }) => {
         try {
             await eliminarRecetaService(receta._id)
             dispatch(quitarReceta(receta._id))
-            // Actualizamos el uso del plan (cantidad de recetas)
             const perfil = await obtenerPerfilService()
             dispatch(actualizarUsuario(perfil))
             toast.success("Receta eliminada")

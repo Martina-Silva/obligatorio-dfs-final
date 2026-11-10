@@ -22,7 +22,6 @@ const Recetas = () => {
 
     const hayFiltros = filtros.titulo !== "" || filtros.categoria !== "" || filtros.tiempoMax !== ""
 
-    // Categorías y datos del plan: se cargan una sola vez
     useEffect(() => {
         const cargarBase = async () => {
             try {
@@ -39,7 +38,6 @@ const Recetas = () => {
         cargarBase()
     }, [dispatch])
 
-    // Lista de recetas: se vuelve a pedir cada vez que cambian los filtros (con una pausa corta)
     useEffect(() => {
         let cancelado = false
 
